@@ -1,0 +1,6 @@
+{
+	"name": "Trunk/PreferencesLibrary",
+	"autoload":{
+		"classmap": ["/src/"]
+	}
+}
