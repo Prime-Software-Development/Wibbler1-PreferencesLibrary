@@ -19,10 +19,10 @@ class Preferences extends \Trunk\Wibbler\Modules\base {
 	 */
 	private $namespace = null;
 
-	public function __construct(array $options = array()) {
+	public function __construct(array $options = null) {
 		parent::__construct();
 
-		if(!isset($options['namespace'])) {
+		if($options && isset($options['namespace'])) {
 			$namespace = $options['namespace'];
 
 			$this->set_namespace($namespace);
