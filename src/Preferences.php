@@ -19,6 +19,18 @@ class Preferences extends \Trunk\Wibbler\Modules\base {
 	 */
 	private $namespace = null;
 
+	public function __construct(array $options = array()) {
+		parent::__construct();
+
+		if(!isset($options['namespace'])) {
+			throw new \Exception("Preferences requires 'namespace' option to be present on construction");
+		}
+
+		$namespace = $options['namespace'];
+
+		$this->set_namespace($namespace);
+	}
+
 	public function set_namespace( $namespace ) {
 		$this->namespace = $namespace;
 		$query_function = "\\" . $this->namespace . "\\PreferencesQuery";
