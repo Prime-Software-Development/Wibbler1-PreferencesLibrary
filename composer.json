@@ -1,6 +1,20 @@
 {
-	"name": "Trunk/PreferencesLibrary",
-	"autoload":{
-		"classmap": ["/src/"]
+  "name": "trunk/preferenceslibrary",
+  "type": "library",
+  "description": "TrunkSoftware Preferences Library for Wibbler framework",
+  "homepage": "http://www.trunknetworks.com/",
+  "authors": [
+	{
+	  "name": "Chris Weller",
+	  "email": "chris.weller@trunknetworks.com"
 	}
+  ],
+  "autoload": {
+	"classmap": [
+	  "/src/"
+	]
+  },
+  "require": {
+	"php": ">=7"
+  }
 }
