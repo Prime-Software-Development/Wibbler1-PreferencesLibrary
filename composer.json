@@ -1,12 +1,12 @@
 {
-  "name": "trunk/preferenceslibrary",
+  "name": "primesoftwaredevelopment/preferenceslibrary",
   "type": "library",
-  "description": "TrunkSoftware Preferences Library for Wibbler framework",
-  "homepage": "http://www.trunknetworks.com/",
+  "description": "Prime Software Development Preferences Library for the Wibbler framework",
+  "homepage": "http://www.primesoftwaredevelopment.co.uk/",
   "authors": [
 	{
 	  "name": "Chris Weller",
-	  "email": "chris.weller@trunknetworks.com"
+	  "email": "chris@primesoftwaredevelopment.co.uk"
 	}
   ],
   "autoload": {
