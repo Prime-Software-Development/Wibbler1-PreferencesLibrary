@@ -1,17 +1,17 @@
 <?php
 namespace Trunk\PreferencesLibrary\Modules;
-/**
- * Created by PhpStorm.
- * User: nas
- * Date: 07/07/15
- * Time: 09:46
- */
+
 class Preferences extends \Trunk\Wibbler\Modules\base {
 	/**
 	 * Array of preferences
 	 * @var null
 	 */
 	protected $preferences = null;
+
+	/**
+	 * @var Prefs[]
+	 */
+	protected $preferencesArray = null;
 
 	/**
 	 * Namespace the preferences table is part of
@@ -69,11 +69,26 @@ class Preferences extends \Trunk\Wibbler\Modules\base {
 	 */
 	private function retrieve_preferences() {
 		$query_function = "\\" . $this->namespace . "\\" . $this->table_name . "Query";
-		$preferences = $query_function::create()
-			->select( [ 'Code', 'Value' ] )
-			->find();
+		$preferences = $query_function::create()->find();
 
-		$this->preferences = $preferences->toKeyValue( 'Code', 'Value' );
+		// Iterate over the preferences
+		foreach( $preferences as $pref ) {
+			// Get the code for the preference
+			$code = $pref->getCode();
+			// Fill the simple key => value array
+			$this->preferences[ $code ] = $pref->getValue();
+			// Fill the full object array
+			$this->preferencesArray[ $code ] = $pref;
+		}
+	}
+
+	/**
+	 * Return the preference by code
+	 * @param $code
+	 * @return Prefs|null
+	 */
+	public function getPref( $code ) {
+		return isset( $this->preferencesArray[ $code ] ) ? $this->preferencesArray[ $code ] : null;
 	}
 
 	/**
@@ -82,7 +97,8 @@ class Preferences extends \Trunk\Wibbler\Modules\base {
 	 * @return null
 	 */
 	public function get( $code ) {
-		return isset( $this->preferences[ $code ] ) ? $this->preferences[ $code ] : null;
+		$pref = $this->getPref( $code );
+		return $pref ? $pref->getValue() : null;
 	}
 
 	/**
@@ -92,12 +108,22 @@ class Preferences extends \Trunk\Wibbler\Modules\base {
 	 */
 	public function set( $code, $value ) {
 
-		$query_function = "\\" . $this->namespace . "\\PreferencesQuery";
+		// Get the preference
+		$preference = $this->getPref( $code );
+
+		if ( $preference === null )
+			return $this;
+
+		$preference->setValue( $value );
+		$preference->save();
+
+		return $this;
+		/*$query_function = "\\" . $this->namespace . "\\" . $this->table_name . "Query";
 		$preference = $query_function::create()
 			->filterByCode( $code )
 			->findOne();
 		$preference->setValue( $value );
-		$preference->save();
+		$preference->save();*/
 	}
 
 	/**
